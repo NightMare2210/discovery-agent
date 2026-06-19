@@ -1,0 +1,46 @@
+{
+  "discovery": "inmobiliaria-azuay",
+  "generated": "2026-06-18",
+  "hypotheses": [
+    {
+      "id": "H-01",
+      "risk": "alto",
+      "assumption": "Los clientes confiaran en el estado de propiedad mostrado en pantalla y no llamaran al asesor para confirmar disponibilidad.",
+      "hypothesis": "Creemos que el cliente comprador dejara de llamar para confirmar disponibilidad si el portal muestra el estado en tiempo real (disponible/reservada/vendida), porque el dolor principal reportado fue llegar a una propiedad ya reservada sin previo aviso.",
+      "metric": "Porcentaje de visitas agendadas que no van precedidas de una llamada de confirmacion al asesor durante los primeros 30 dias.",
+      "threshold": "al menos 60% de las visitas agendadas online no van precedidas de llamada de confirmacion en los primeros 30 dias.",
+      "experiment": "Fake door + mago de Oz: mostrar a 10 clientes reales una ficha con estado actualizado manualmente cada 10 minutos por el asesor. Registrar si llaman igualmente para confirmar. Caja de tiempo: 2 semanas, costo /bin/zsh de desarrollo.",
+      "decision": "Si pasa (al menos 60% no llaman) -> construir el sistema de actualizacion en tiempo real. Si falla (la mayoria sigue llamando) -> entrevistar a quienes llamaron para identificar que genero desconfianza y pivotar el diseno del indicador de estado antes de construir."
+    },
+    {
+      "id": "H-02",
+      "risk": "alto",
+      "assumption": "Los clientes preferiran seleccionar el horario de visita desde el portal en lugar de llamar a la inmobiliaria.",
+      "hypothesis": "Creemos que el cliente comprador agendara su visita desde el portal sin llamar si puede ver horarios disponibles y confirmar en el momento, porque reportaron que esperar callback de hasta un dia fue un dolor clave que generaba desconfianza.",
+      "metric": "Porcentaje de solicitudes de visita iniciadas desde el portal versus por telefono durante los primeros 60 dias.",
+      "threshold": "al menos 70% de las solicitudes de visita se inician desde el portal en los primeros 60 dias de operacion.",
+      "experiment": "Smoke test con mago de Oz: landing page con boton Agendar visita que abre un Calendly configurado por el asesor. El asesor confirma manualmente cada reserva. Sin backend propio. Caja de tiempo: 4 semanas, costo menos de .",
+      "decision": "Si pasa (al menos 70% agenda online) -> construir el modulo de agendamiento integrado en el portal. Si falla -> entrevistar a quienes llamaron: si el canal telefonico tiene atributos que el portal no replica, pivotar a un modelo hibrido (chat + agenda asistida)."
+    },
+    {
+      "id": "H-03",
+      "risk": "medio",
+      "assumption": "Los asesores completaran los campos minimos obligatorios (metraje, servicios, minimo 3 fotos) sin intentar eludir la validacion del sistema.",
+      "hypothesis": "Creemos que el asesor inmobiliario completara los datos minimos exigidos si el sistema bloquea la publicacion de forma explicita, porque ya adopto de forma natural mejoras de productividad como el codigo AZU-XXXX cuando el beneficio fue tangible.",
+      "metric": "Porcentaje de propiedades publicadas con todos los campos minimos completos en el primer intento, sin edicion posterior para cumplir requisitos.",
+      "threshold": "al menos 80% de las propiedades se publican con campos minimos completos en el primer intento durante el primer mes.",
+      "experiment": "Concierge: entregar a los 4 asesores un formulario Google con los campos minimos obligatorios y pedirles que carguen 2 propiedades reales cada uno. Observar que campos intentan omitir. Caja de tiempo: 1 semana, costo /bin/zsh.",
+      "decision": "Si pasa (al menos 80% completan sin omisiones) -> implementar la validacion de campos en el sistema. Si falla -> identificar los campos omitidos con mas frecuencia y evaluar si el formulario puede simplificarse antes de construir la validacion."
+    },
+    {
+      "id": "H-04",
+      "risk": "medio",
+      "assumption": "La gerente habilitara el sistema para los 4 asesores en el primer mes de operacion.",
+      "hypothesis": "Creemos que la gerente/propietaria activara el acceso de todos sus asesores en las primeras 4 semanas si el onboarding toma menos de 1 hora por asesor, porque expreso que la plataforma debe ser la cara profesional del negocio pero que la dificultad de uso es la principal barrera de adopcion.",
+      "metric": "Numero de asesores con al menos 1 propiedad publicada al finalizar el primer mes desde el lanzamiento.",
+      "threshold": "Los 4 asesores tienen al menos 1 propiedad publicada a los 30 dias del lanzamiento.",
+      "experiment": "Entrevista dirigida con la gerente: demostracion de onboarding de 30 minutos y pregunta explicita de compromiso para capacitar a los 4 asesores en la semana 1. Caja de tiempo: 1 sesion, costo /bin/zsh.",
+      "decision": "Si pasa (compromete el onboarding de los 4 asesores en semana 1) -> confirmar la fecha en el contrato de implementacion. Si falla (renegocia o pospone) -> replantear el rollout comenzando con 1-2 asesores piloto y escalar cuando el valor sea demostrable."
+    }
+  ]
+}
