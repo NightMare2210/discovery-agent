@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>gate demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #2B2B2B;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    padding: 30px;
+    min-height: 100vh;
+  }
+  .label {
+    color: #888;
+    font-size: 11px;
+    margin-bottom: 8px;
+    margin-top: 24px;
+    letter-spacing: .05em;
+  }
+  .label:first-child { margin-top: 0; }
+  .window {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    margin-bottom: 6px;
+  }
+  .titlebar {
+    background: #3C3C3C;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #FF5F57; }
+  .dot.y { background: #FFBD2E; }
+  .dot.g { background: #28C840; }
+  .titlebar span {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #9A9A9A;
+    margin-right: 37px;
+  }
+  .body {
+    background: #1E1E1E;
+    padding: 16px 18px 20px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #D4D4D4;
+  }
+  .prompt { color: #4EC9B0; }
+  .cmd    { color: #D4D4D4; }
+  .arg    { color: #CE9178; }
+  .border { color: #555; }
+  .err    { color: #F44747; }
+  .warn   { color: #CE9178; }
+  .ok     { color: #4EC994; }
+  .dim    { color: #666; }
+  .blank  { display: block; height: 6px; }
+</style>
+</head>
+<body>
+
+<div class="label">— bloqueo: se retira la entrevista de la gerente</div>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+    <span>zsh — discovery-agent</span>
+  </div>
+  <div class="body">
+<span class="prompt">brando@MacBook discovery-agent %</span> <span class="cmd">mv</span> <span class="arg">discoveries/inmobiliaria-azuay/interviews/gerente-propietaria.md</span> <span class="arg">discoveries/inmobiliaria-azuay/interviews/gerente-propietaria.md.bak</span>
+<span class="blank"></span>
+<span class="prompt">brando@MacBook discovery-agent %</span> <span class="cmd">echo</span> <span class="arg">'{"tool_input":{"file_path":"discoveries/inmobiliaria-azuay/outputs/user-stories.md"},"cwd":"/Users/brando/Desktop/Maestria-Software/Clase1/discovery-agent"}'</span> <span class="dim">\</span>
+  <span class="dim">|</span> <span class="cmd">python3</span> <span class="arg">.claude/hooks/readiness-gate.py</span>
+<span class="blank"></span>
+<span class="border">────────────────────────────────────────────────────────────────</span>
+<span class="err">✗ HOOK readiness-gate: evidencia insuficiente para generar el MVP</span>
+<span class="border">────────────────────────────────────────────────────────────────</span>
+<span class="err">  • Persona «G. (gerente / propietaria)» (rol: gerente) no tiene una entrevista</span>
+<span class="err">    en primera persona en disco. Está construida de oídas.</span>
+<span class="err">  • Dolor «visibilidad-rendimiento-asesores» cita «gerente-propietaria.md»,</span>
+<span class="err">    que no existe en interviews/.</span>
+<span class="err">  • Dolor «asignacion-clientes-sin-vista-de-carga» cita «gerente-propietaria.md»,</span>
+<span class="err">    que no existe en interviews/.</span>
+<span class="err">  • Dolor «propiedades-inactivas-sin-alerta» cita «gerente-propietaria.md»,</span>
+<span class="err">    que no existe en interviews/.</span>
+<span class="err">  • Dolor «ofertas-rechazadas-sin-consolidar» cita «gerente-propietaria.md»,</span>
+<span class="err">    que no existe en interviews/.</span>
+<span class="border">────────────────────────────────────────────────────────────────</span>
+<span class="warn">Acción: levanta más evidencia (agrega/entrevista) y reintenta.</span>
+<span class="border">────────────────────────────────────────────────────────────────</span>
+<span class="blank"></span>
+<span class="prompt">brando@MacBook discovery-agent %</span> <span class="cmd">echo</span> <span class="dim">$?</span>
+<span class="err">2</span>
+  </div>
+</div>
+
+<div class="label">— resolución: se restaura la entrevista y el gate aprueba</div>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+    <span>zsh — discovery-agent</span>
+  </div>
+  <div class="body">
+<span class="prompt">brando@MacBook discovery-agent %</span> <span class="cmd">mv</span> <span class="arg">discoveries/inmobiliaria-azuay/interviews/gerente-propietaria.md.bak</span> <span class="arg">discoveries/inmobiliaria-azuay/interviews/gerente-propietaria.md</span>
+<span class="blank"></span>
+<span class="prompt">brando@MacBook discovery-agent %</span> <span class="cmd">echo</span> <span class="arg">'{"tool_input":{"file_path":"discoveries/inmobiliaria-azuay/outputs/user-stories.md"},"cwd":"/Users/brando/Desktop/Maestria-Software/Clase1/discovery-agent"}'</span> <span class="dim">\</span>
+  <span class="dim">|</span> <span class="cmd">python3</span> <span class="arg">.claude/hooks/readiness-gate.py</span>
+<span class="blank"></span>
+<span class="prompt">brando@MacBook discovery-agent %</span> <span class="cmd">echo</span> <span class="dim">$?</span>
+<span class="ok">0</span>
+  </div>
+</div>
+
+</body>
+</html>
